@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Salto App</string>
+
+    <!--Button-->
+    <string name="create_new_store">Create new store</string>
+    <string name="create">Create</string>
+    <string name="login">Login</string>
+
+    <!--Text-->
+    <string name="store_name">Store Name</string>
+    <string name="employee_name">Employee Name</string>
+    <string name="employee">Employee</string>
+    <string name="front_door">Front Door</string>
+    <string name="storage_room">Storage Room</string>
+    <string name="authorization">Authorization</string>
+
+    <!--Switch-->
+
+
+</resources>

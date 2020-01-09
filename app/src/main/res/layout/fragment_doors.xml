@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragment.DoorsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/front_door_view"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="70dp"
+            android:background="@android:color/holo_green_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/front_door_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/front_door"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/front_door_view"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="@+id/front_door_view"
+            app:layout_constraintTop_toTopOf="@+id/front_door_view" />
+
+        <TextView
+            android:id="@+id/front_door_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="is open"
+            app:layout_constraintEnd_toEndOf="@+id/front_door_title"
+            app:layout_constraintStart_toStartOf="@+id/front_door_title"
+            app:layout_constraintTop_toBottomOf="@+id/front_door_title" />
+
+        <Button
+            android:id="@+id/front_door_button"
+            style="@style/ButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Lock door"
+            app:layout_constraintBottom_toBottomOf="@+id/front_door_view"
+            app:layout_constraintEnd_toEndOf="@+id/front_door_view"
+            app:layout_constraintStart_toStartOf="@+id/front_door_view" />
+
+        <View
+            android:id="@+id/storage_room_view"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="70dp"
+            android:background="@android:color/holo_red_light"
+            app:layout_constraintEnd_toEndOf="@+id/front_door_view"
+            app:layout_constraintStart_toStartOf="@+id/front_door_view"
+            app:layout_constraintTop_toBottomOf="@+id/front_door_view" />
+
+        <TextView
+            android:id="@+id/storage_room_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/storage_room"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/storage_room_view"
+            app:layout_constraintStart_toStartOf="@+id/storage_room_view"
+            app:layout_constraintTop_toTopOf="@+id/storage_room_view" />
+
+        <TextView
+            android:id="@+id/storage_room_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="is locked"
+            app:layout_constraintEnd_toEndOf="@+id/storage_room_title"
+            app:layout_constraintStart_toStartOf="@+id/storage_room_title"
+            app:layout_constraintTop_toBottomOf="@+id/storage_room_title" />
+
+        <Button
+            android:id="@+id/storage_room_botton"
+            style="@style/ButtonStyle"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Open door"
+            app:layout_constraintBottom_toBottomOf="@+id/storage_room_view"
+            app:layout_constraintEnd_toEndOf="@+id/storage_room_view"
+            app:layout_constraintStart_toStartOf="@+id/storage_room_view" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
