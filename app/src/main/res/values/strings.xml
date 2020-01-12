@@ -13,6 +13,8 @@
     <string name="front_door">Front Door</string>
     <string name="storage_room">Storage Room</string>
     <string name="authorization">Authorization</string>
+    <string name="add_new_employee">Add New Employee</string>
+    <string name="next">Next</string>
 
     <!--Switch-->
 

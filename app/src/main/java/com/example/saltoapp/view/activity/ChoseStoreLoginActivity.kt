@@ -5,12 +5,12 @@ import android.os.Bundle
 import com.example.saltoapp.R
 import kotlinx.android.synthetic.main.custom_toolbar.*
 
-class StoreActivity : AppCompatActivity() {
+class ChoseStoreLoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_store)
+        setContentView(R.layout.activity_chose_store_login)
         setSupportActionBar(custom_toolbar)
-        supportActionBar?.title = "User Name"
+        supportActionBar?.title = getString(R.string.login)
     }
 }

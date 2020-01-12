@@ -9,17 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.StoreActivity">
+        <activity android:name=".view.activity.ChoseStoreLoginActivity"></activity>
+        <activity android:name=".view.activity.CreateEmployeeActivity"></activity>
+        <activity android:name=".view.activity.StoreActivity"></activity>
+        <activity android:name=".view.activity.CreateStoreActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.CreateStoreActivity">
-        </activity>
         <activity android:name=".view.activity.LoginActivity" />
-        <activity android:name=".view.activity.StartActivity"></activity>
+        <activity android:name=".view.activity.StartActivity" />
     </application>
 
 </manifest>

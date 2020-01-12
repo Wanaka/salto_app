@@ -7,13 +7,15 @@ import android.widget.EditText
 import android.widget.Switch
 import android.widget.TextView
 import com.example.saltoapp.R
+import kotlinx.android.synthetic.main.custom_toolbar.*
 
 class CreateStoreActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_store)
-
+        setSupportActionBar(custom_toolbar)
+        supportActionBar?.title = getString(R.string.create_new_store)
 
         val employee1: View = findViewById(R.id.employee1_auth)
         val employee1_title = employee1.findViewById<TextView>(R.id.employee_title)
