@@ -14,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/store_name" />
 
     <TextView
         android:id="@+id/textView6"
@@ -44,11 +44,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/store_name"
-        app:layout_constraintStart_toStartOf="@+id/editText3"
+        app:layout_constraintStart_toStartOf="@+id/store_name"
         app:layout_constraintTop_toBottomOf="@+id/include2" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/store_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1020317631370",
+    "firebase_url": "https://saltoapp-c3a1f.firebaseio.com",
+    "project_id": "saltoapp-c3a1f",
+    "storage_bucket": "saltoapp-c3a1f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020317631370:android:2a40016dbfe59d2da13e73",
+        "android_client_info": {
+          "package_name": "com.example.saltoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020317631370-j2r87m65ki2fp6vj8opbb52lk8l9rh3q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.saltoapp",
+            "certificate_hash": "199f28ab37863261d8394c9a49e5a21eb2731203"
+          }
+        },
+        {
+          "client_id": "1020317631370-14ab5fvvhhrbqajvapbbleede9qt0k6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLfIhwypQvwhjp_pzP80X_TFL1-3PaX7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020317631370-14ab5fvvhhrbqajvapbbleede9qt0k6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
