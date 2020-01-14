@@ -14,6 +14,9 @@ class FirebaseViewModel: ViewModel() {
     suspend fun createUserAccount(user: User, context: Context){
         return repo.createUserAccount(user, context)
     }
+    suspend fun loginUser(name: String, context: Context){
+        return repo.loginUser(name, context)
+    }
 
 
     suspend fun getDoorsStatus(user: User): Store {

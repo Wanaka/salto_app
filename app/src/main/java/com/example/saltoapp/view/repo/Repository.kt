@@ -14,6 +14,10 @@ class Repository {
         return firebase.createUserAccount(user, context)
     }
 
+    suspend fun loginUser(name: String, context: Context){
+        return firebase.loginUser(name, context)
+    }
+
     suspend fun getDoorsStatus(user: User): Store {
         return firebase.getDoorsStatus(user)
     }

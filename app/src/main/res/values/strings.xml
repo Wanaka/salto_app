@@ -19,6 +19,7 @@
     <string name="is_locked">is locked</string>
     <string name="lock_door">Lock Door</string>
     <string name="open_door">Open Door</string>
+    <string name="access_denied">Access Denied</string>
 
 
     <!--Switch-->

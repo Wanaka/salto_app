@@ -9,18 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 
 import com.example.saltoapp.R
 import com.example.saltoapp.view.model.Store
 import com.example.saltoapp.view.model.User
+import com.example.saltoapp.view.navigator.NavigatorImpl
 import com.example.saltoapp.view.viewmodel.FirebaseViewModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_doors.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
@@ -28,10 +27,9 @@ import kotlinx.coroutines.withContext
 
 class DoorsFragment : Fragment() {
 
-    private lateinit var viewModel: FirebaseViewModel
-
+    val navigator = NavigatorImpl()
     private val user = FirebaseAuth.getInstance().currentUser
-
+    private lateinit var viewModel: FirebaseViewModel
     lateinit var userAuth: User
     lateinit var doors: Store
 
@@ -115,7 +113,7 @@ class DoorsFragment : Fragment() {
             }
         }
         else {
-            Toast.makeText(context,"Front Door DENIED!!!",Toast.LENGTH_SHORT).show()
+            navigator.accessDeniedToast(context!!)
         }
     }
 
