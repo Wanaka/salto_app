@@ -21,4 +21,8 @@ class Repository {
     suspend fun getUser(user: String): User {
         return firebase.getUser(user)
     }
+
+    suspend fun setDoorStatus(store: Store) {
+        return firebase.setDoorStatus(store)
+    }
 }

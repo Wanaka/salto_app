@@ -38,10 +38,10 @@ class FireBaseService {
 
         val user = User(user.name, user.frontDoor, user.storageRoom, user.store)
 
-        db.collection("users").document(user.name).collection(user.name)
-            .add(user)
+        db.collection("users").document(user.name)
+            .set(user)
             .addOnSuccessListener { documentReference ->
-                Log.d(",,,", "DocumentSnapshot added with ID: ${documentReference.id}")
+                Log.d(",,,", "DocumentSnapshot added with ID: ${documentReference}")
             }
             .addOnFailureListener { e ->
                 Log.w(",,,", "Error adding document", e)
@@ -52,10 +52,10 @@ class FireBaseService {
 
         val store = Store(user.store, frontDoor = false, storageRoom = false)
 
-        db.collection("store").document(user.store).collection(user.store)
-            .add(store)
+        db.collection("store").document(user.store)
+            .set(store)
             .addOnSuccessListener { documentReference ->
-                Log.d(",,,", "DocumentSnapshot added with ID: ${documentReference.id}")
+                Log.d(",,,", "DocumentSnapshot added with ID:")
             }
             .addOnFailureListener { e ->
                 Log.w(",,,", "Error adding document", e)
@@ -66,18 +66,17 @@ class FireBaseService {
         lateinit var mUser: User
 
         return try {
-            var path = db.collection("users").document(user).collection(user)
+            var path = db.collection("users").document(user)
             var document = Tasks.await(path.get())
 
-                    if (document.documents != null) {
+                    if (document != null) {
 
-                        for (i in document.documents) {
 
-                            mUser = User(i["name"].toString(),
-                                i["frontDoor"].toString().toBoolean(),
-                                i["storageRoom"].toString().toBoolean(),
-                                i["store"].toString())
-                        }
+                            mUser = User(document["name"].toString(),
+                                document["frontDoor"].toString().toBoolean(),
+                                document["storageRoom"].toString().toBoolean(),
+                                document["store"].toString())
+
                     } else {
                         Log.d(",,,", "No such document")
                     }
@@ -88,27 +87,35 @@ class FireBaseService {
     }
 
     suspend fun getDoorsStatus(user: User): Store {
-        Log.d(",,,", "Check user: ${user.store}")
-
         lateinit var store: Store
 
         return try {
-            var path = db.collection("store").document(user.store).collection(user.store)
+            var path = db.collection("store").document(user.store)
             var document = Tasks.await(path.get())
 
-            if (document.documents != null) {
+            if (document != null) {
 
-                for (i in document.documents) {
-                    Log.d(",,,", "DocumentSnapshot data: ${i["store"]}")
-                    store = Store(i["store"].toString(),
-                        i["frontDoor"].toString().toBoolean(),
-                        i["storageRoom"].toString().toBoolean())
-                }
+                    Log.d(",,,", "DocumentSnapshot data: ${document["store"]}")
+                    store = Store(document["store"].toString(),
+                        document["frontDoor"].toString().toBoolean(),
+                        document["storageRoom"].toString().toBoolean())
+
                 }
 
             store
         } finally {
 
         }
+    }
+
+    suspend fun setDoorStatus(store: Store) {
+        db.collection("store").document(store.store)
+            .set(store)
+            .addOnSuccessListener { documentReference ->
+                Log.d(",,,", "DocumentSnapshot added with ID: ")
+            }
+            .addOnFailureListener { e ->
+                Log.w(",,,", "Error adding document", e)
+            }
     }
 }

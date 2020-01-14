@@ -17,7 +17,6 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginTop="32dp"
-            android:background="@android:color/holo_green_light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,17 +39,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="is open"
             app:layout_constraintEnd_toEndOf="@+id/front_door_title"
             app:layout_constraintStart_toStartOf="@+id/front_door_title"
             app:layout_constraintTop_toBottomOf="@+id/front_door_title" />
 
         <Button
-            android:id="@+id/front_door_button"
+            android:id="@+id/btn_frontDoor"
             style="@style/ButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Lock door"
             app:layout_constraintBottom_toBottomOf="@+id/front_door_view"
             app:layout_constraintEnd_toEndOf="@+id/front_door_view"
             app:layout_constraintStart_toStartOf="@+id/front_door_view" />
@@ -60,7 +57,6 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginTop="32dp"
-            android:background="@android:color/holo_red_light"
             app:layout_constraintEnd_toEndOf="@+id/front_door_view"
             app:layout_constraintStart_toStartOf="@+id/front_door_view"
             app:layout_constraintTop_toBottomOf="@+id/front_door_view" />
@@ -81,17 +77,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="is locked"
             app:layout_constraintEnd_toEndOf="@+id/storage_room_title"
             app:layout_constraintStart_toStartOf="@+id/storage_room_title"
             app:layout_constraintTop_toBottomOf="@+id/storage_room_title" />
 
         <Button
-            android:id="@+id/storage_room_botton"
+            android:id="@+id/btn_storageRoom"
             style="@style/ButtonStyle"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Open door"
+            android:text="@string/open_door"
             app:layout_constraintBottom_toBottomOf="@+id/storage_room_view"
             app:layout_constraintEnd_toEndOf="@+id/storage_room_view"
             app:layout_constraintStart_toStartOf="@+id/storage_room_view" />

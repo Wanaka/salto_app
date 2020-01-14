@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.saltoapp.R
+import com.example.saltoapp.view.fragment.DoorsFragment
 import com.example.saltoapp.view.navigator.NavigatorImpl
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.custom_toolbar.*
@@ -20,9 +21,9 @@ class StoreActivity : AppCompatActivity() {
         setSupportActionBar(custom_toolbar)
         supportActionBar?.title = "User Name"
 
-        if(user == null){
-            navigator.newEvent(this, StartActivity())
-        }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, DoorsFragment())
+            .commit()
     }
 
     public override fun onStart() {

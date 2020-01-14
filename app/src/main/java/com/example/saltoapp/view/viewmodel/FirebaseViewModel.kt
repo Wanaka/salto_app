@@ -23,4 +23,8 @@ class FirebaseViewModel: ViewModel() {
     suspend fun getUser(user: String): User{
         return repo.getUser(user)
     }
+
+    suspend fun setDoorStatus(store: Store) {
+        return repo.setDoorStatus(store)
+    }
 }

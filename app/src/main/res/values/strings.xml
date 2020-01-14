@@ -15,6 +15,11 @@
     <string name="authorization">Authorization</string>
     <string name="add_new_employee">Add New Employee</string>
     <string name="next">Next</string>
+    <string name="is_open">is open</string>
+    <string name="is_locked">is locked</string>
+    <string name="lock_door">Lock Door</string>
+    <string name="open_door">Open Door</string>
+
 
     <!--Switch-->
 
