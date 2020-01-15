@@ -15,5 +15,10 @@
         <item name="android:padding">10dp</item>
     </style>
 
+<!-- White color Style -->
+    <style name="TextWhiteColorStyle">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
 
 </resources>

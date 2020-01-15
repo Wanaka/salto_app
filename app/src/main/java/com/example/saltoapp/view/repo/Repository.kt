@@ -2,6 +2,7 @@ package com.example.saltoapp.view.repo
 
 import android.content.Context
 import android.util.Log
+import com.example.saltoapp.view.model.DoorInteraction
 import com.example.saltoapp.view.model.Store
 import com.example.saltoapp.view.model.User
 
@@ -28,5 +29,13 @@ class Repository {
 
     suspend fun setDoorStatus(store: Store) {
         return firebase.setDoorStatus(store)
+    }
+
+    suspend fun sendToEventList(doorInteraction: DoorInteraction) {
+        return firebase.sendToEventList(doorInteraction)
+    }
+
+    suspend fun getEventList(store: String): ArrayList<DoorInteraction> {
+        return firebase.getEventList(store)
     }
 }

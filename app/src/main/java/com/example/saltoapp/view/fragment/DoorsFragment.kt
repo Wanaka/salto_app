@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 
 import com.example.saltoapp.R
+import com.example.saltoapp.view.model.DoorInteraction
 import com.example.saltoapp.view.model.Store
 import com.example.saltoapp.view.model.User
 import com.example.saltoapp.view.navigator.NavigatorImpl
@@ -27,26 +28,26 @@ import kotlinx.coroutines.withContext
 
 class DoorsFragment : Fragment() {
 
-    val navigator = NavigatorImpl()
-    private val user = FirebaseAuth.getInstance().currentUser
+    private val navigator = NavigatorImpl()
+    private val currentUser = FirebaseAuth.getInstance().currentUser
     private lateinit var viewModel: FirebaseViewModel
     lateinit var userAuth: User
     lateinit var doors: Store
-
+    private lateinit var user: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this).get(FirebaseViewModel::class.java)
 
-        val user = user?.email.toString().substringBefore("@")
+        user = currentUser?.email.toString().substringBefore("@")
 
-        CoroutineScope(IO).launch{
+        CoroutineScope(IO).launch {
             try {
                 var userAccess = viewModel.getUser(user)
                 var store = viewModel.getDoorsStatus(userAccess)
 
-                withContext(Main){
+                withContext(Main) {
                     updateUI(store)
 
                     userAuth = userAccess
@@ -72,18 +73,18 @@ class DoorsFragment : Fragment() {
     }
 
     private fun updateUI(store: Store) {
-        when(store.frontDoor){
-            true ->  openDoor(front_door_view, front_door_status, btn_frontDoor)
+        when (store.frontDoor) {
+            true -> openDoor(front_door_view, front_door_status, btn_frontDoor)
             else -> lockedDoor(front_door_view, front_door_status, btn_frontDoor)
         }
 
-        when(store.storageRoom){
-            true ->  openDoor(storage_room_view, storage_room_status, btn_storageRoom)
+        when (store.storageRoom) {
+            true -> openDoor(storage_room_view, storage_room_status, btn_storageRoom)
             else -> lockedDoor(storage_room_view, storage_room_status, btn_storageRoom)
         }
     }
 
-    private fun doorsButtonClick(){
+    private fun doorsButtonClick() {
         btn_frontDoor.setOnClickListener {
             changeDoorStatus(userAuth.frontDoor, "Front Door")
         }
@@ -93,61 +94,91 @@ class DoorsFragment : Fragment() {
         }
     }
 
-    private fun changeDoorStatus(user: Boolean, door: String){
-        if(user) {
+    private fun changeDoorStatus(userCheck: Boolean, door: String) {
+        if (userCheck) {
             CoroutineScope(IO).launch {
                 try {
-                    when(door){
+                    when (door) {
                         "Front Door" -> {
                             viewModel.setDoorStatus(checkDoor(door))
-                            updateUI(doors.frontDoor, front_door_view, front_door_status, btn_frontDoor)
+                            updateEventList("Front Door", true)
+                            updateUI(
+                                doors.frontDoor,
+                                front_door_view,
+                                front_door_status,
+                                btn_frontDoor
+                            )
                         }
                         "Storage Room" -> {
                             viewModel.setDoorStatus(checkDoor(door))
-                            updateUI(doors.storageRoom, storage_room_view, storage_room_status, btn_storageRoom)
+                            updateEventList("Storage Room", true)
+                            updateUI(
+                                doors.storageRoom,
+                                storage_room_view,
+                                storage_room_status,
+                                btn_storageRoom
+                            )
                         }
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
-        }
-        else {
+        } else {
+            CoroutineScope(IO).launch {
+                try {
+                    when (door) {
+                        "Front Door" -> {
+                            updateEventList("Front Door", false)
+//                        viewModel.sendToEventList(DoorInteraction(user, doors.store, false,"Front Door"))
+                        }
+                        "Storage Room" -> {
+                            updateEventList("Storage Room", false)
+
+//                        viewModel.sendToEventList(DoorInteraction(user, doors.store, false, "Storage Room"))
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
             navigator.accessDeniedToast(context!!)
         }
     }
 
-    private suspend fun updateUI(door: Boolean, view: View, status: TextView, button: Button){
-        withContext(Main){
-            when(door){
+    private fun checkDoor(door: String): Store {
+        if (door == "Front Door") {
+            doors.frontDoor = !doors.frontDoor
+        } else if (door == "Storage Room") {
+            doors.storageRoom = !doors.storageRoom
+        }
+        return doors
+    }
+
+    private suspend fun updateEventList(doorName: String, access: Boolean) {
+        viewModel.sendToEventList(DoorInteraction(user, doors.store, access, doorName))
+    }
+
+    private suspend fun updateUI(door: Boolean, view: View, status: TextView, button: Button) {
+        withContext(Main) {
+            when (door) {
                 false -> lockedDoor(view, status, button)
                 else -> openDoor(view, status, button)
             }
         }
     }
 
-    private fun checkDoor(door: String): Store {
-        if(door == "Front Door"){
-            doors.frontDoor = !doors.frontDoor
-        }
-        else if(door == "Storage Room"){
-            doors.storageRoom = !doors.storageRoom
-        }
-        return doors
-    }
-
-    private fun openDoor(view: View, status: TextView, button: Button){
+    private fun openDoor(view: View, status: TextView, button: Button) {
         view.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorGreen))
         status.text = getText(R.string.is_open)
         button.text = getText(R.string.lock_door)
     }
 
-    private fun lockedDoor(view: View, status: TextView, button: Button){
+    private fun lockedDoor(view: View, status: TextView, button: Button) {
         view.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorRed))
         status.text = getText(R.string.is_locked)
         button.text = getText(R.string.open_door)
     }
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
