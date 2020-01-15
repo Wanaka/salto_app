@@ -13,9 +13,8 @@ import com.example.saltoapp.R
 
 class NavigatorImpl : Navigator {
 
-    override fun newEvent(context: Context, activity: Activity) {
+    override fun newEvent(context: Context,  activity: Activity) {
         val intent = Intent(context, activity::class.java)
-//        intent.putExtra("key", value)
         startActivity(context, intent, null)
     }
 

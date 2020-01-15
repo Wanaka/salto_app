@@ -19,8 +19,8 @@ import kotlinx.coroutines.Dispatchers.IO
 
 class CreateStoreActivity : AppCompatActivity() {
 
-    private var front_door: Boolean = false
-    private var storage_room: Boolean = false
+    private var frontDoor: Boolean = false
+    private var storageRoom: Boolean = false
 
     lateinit var context: Context
 
@@ -43,11 +43,11 @@ class CreateStoreActivity : AppCompatActivity() {
 
         employee1_title.text = "You (Admin)"
 
-        employee1_switch_front_door?.setOnCheckedChangeListener { _, isChecked -> front_door = isChecked }
-        employee1_switch_storage_room?.setOnCheckedChangeListener { _, isChecked -> storage_room = isChecked }
+        employee1_switch_front_door?.setOnCheckedChangeListener { _, isChecked -> frontDoor = isChecked }
+        employee1_switch_storage_room?.setOnCheckedChangeListener { _, isChecked -> storageRoom = isChecked }
 
         button_create.setOnClickListener {
-            createNewAccount(User(employee1_input.text.toString(), front_door, storage_room, store_name.text.toString()))
+            createNewAccount(User(employee1_input.text.toString(), frontDoor, storageRoom, store_name.text.toString(), true))
         }
 
     }
@@ -59,7 +59,7 @@ class CreateStoreActivity : AppCompatActivity() {
     private fun createNewAccount(user: User) = runBlocking{
         CoroutineScope(IO).launch{
             try {
-                viewModel.createUserAccount(user, context)
+                viewModel.createAdminAccount(user, context)
             } catch (e: Error) {
                 Log.d(",,,", "Error: $e")
             }

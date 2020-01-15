@@ -14,6 +14,9 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -25,7 +28,7 @@ class FireBaseService {
     private val navigator = NavigatorImpl()
 
 
-    suspend fun createUserAccount(user: User, context: Context) {
+    suspend fun createAdminAccount(user: User, context: Context) {
         auth.createUserWithEmailAndPassword("${user.name}@mail.com", "123456")
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -33,14 +36,39 @@ class FireBaseService {
                     createStore(user)
                     navigator.newEvent(context, StoreActivity())
                 } else {
-
+                    Log.w(",,,", "Error adding user")
                 }
             }
     }
 
-    private fun addUserDB(user: User) {
-        val user = User(user.name, user.frontDoor, user.storageRoom, user.store)
+    suspend fun createUserAccount(user: User, admin: String, context: Context) {
+        auth.createUserWithEmailAndPassword("${user.name}@mail.com", "123456")
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    addUserDB(user)
+                    CoroutineScope(IO).launch{
+                        loginAdmin(admin, context)
+                    }
+                } else {
+                    Log.w(",,,", "Error adding user")
+                }
+            }
+    }
 
+    private suspend fun loginAdmin(name: String, context: Context) {
+        auth.signInWithEmailAndPassword("${name}@mail.com", "123456")
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.w(",,,", "Admin logged in: $name")
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(",,,", "signInWithEmail:failure", task.exception)
+                }
+            }
+    }
+
+
+    fun addUserDB(user: User) {
         db.collection("users").document(user.name)
             .set(user)
             .addOnSuccessListener { documentReference ->
@@ -88,12 +116,43 @@ class FireBaseService {
                     document["name"].toString(),
                     document["frontDoor"].toString().toBoolean(),
                     document["storageRoom"].toString().toBoolean(),
-                    document["store"].toString()
+                    document["store"].toString(),
+                    document["admin"].toString().toBoolean()
                 )
             } else {
                 Log.d(",,,", "No such document")
             }
             user
+        } finally {
+
+        }
+    }
+
+    suspend fun getAllStoreUsers(store: String): ArrayList<User> {
+        var storeUsers: ArrayList<User> = ArrayList()
+
+        return try {
+            var path = db.collection("users")
+            var document = Tasks.await(path.get())
+
+            if (document.documents != null) {
+                for (i in document.documents) {
+                    if (i["store"] == store) {
+                        storeUsers.add(
+                            User(
+                                i.get("name").toString(),
+                                i.get("frontDoor").toString().toBoolean(),
+                                i.get("storageRoom").toString().toBoolean(),
+                                i.get("store").toString(),
+                                i.get("admin").toString().toBoolean()
+                            )
+                        )
+                    }
+
+                }
+            }
+
+            storeUsers
         } finally {
 
         }
