@@ -42,6 +42,7 @@ class DoorsFragment : Fragment() {
 
         user = currentUser?.email.toString().substringBefore("@")
 
+
         CoroutineScope(IO).launch {
             try {
                 var userAccess = viewModel.getUser(user)
@@ -49,7 +50,6 @@ class DoorsFragment : Fragment() {
 
                 withContext(Main) {
                     updateUI(store)
-
                     userAuth = userAccess
                     doors = store
                 }

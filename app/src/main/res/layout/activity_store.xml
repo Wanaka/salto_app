@@ -17,6 +17,7 @@
 
     <include
         android:id="@+id/include"
+        style="@style/TextWhiteColorStyle"
         layout="@layout/custom_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

@@ -4,15 +4,15 @@
     <item
         android:title="Authorization"
         android:id="@+id/authorization"
-        android:icon="@drawable/abc_vector_test"/>
+        android:icon="@drawable/ic_key"/>
 
     <item
         android:title="Doors"
         android:id="@+id/doors"
-        android:icon="@drawable/abc_vector_test"/>
+        android:icon="@drawable/ic_store"/>
 
     <item
         android:title="List"
         android:id="@+id/list"
-        android:icon="@drawable/abc_vector_test"/>
+        android:icon="@drawable/ic_list"/>
 </menu>

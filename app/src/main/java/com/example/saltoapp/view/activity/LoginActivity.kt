@@ -10,6 +10,7 @@ import com.example.saltoapp.R
 import com.example.saltoapp.view.viewmodel.FirebaseViewModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.custom_toolbar.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +24,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        setSupportActionBar(custom_toolbar)
+        supportActionBar?.title = getString(R.string.login)
+        
         context = this
         auth = FirebaseAuth.getInstance()
         viewModel = ViewModelProviders.of(this).get(FirebaseViewModel::class.java)

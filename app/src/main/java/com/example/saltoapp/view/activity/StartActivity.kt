@@ -7,6 +7,7 @@ import com.example.saltoapp.R
 import com.example.saltoapp.view.navigator.NavigatorImpl
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_start.*
+import kotlinx.android.synthetic.main.custom_toolbar.*
 
 class StartActivity : AppCompatActivity() {
 
@@ -17,6 +18,8 @@ class StartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
+        setSupportActionBar(custom_toolbar)
+        supportActionBar?.title = getString(R.string.salto_app)
 
         if(user != null){
             navigator.newEvent(this, StoreActivity())

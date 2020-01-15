@@ -60,7 +60,6 @@ class StoreActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_store)
         setSupportActionBar(custom_toolbar)
-        supportActionBar?.title = "User Name"
         init()
         bottomNavigationBar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
@@ -73,6 +72,7 @@ class StoreActivity : AppCompatActivity() {
                 user = viewModel.getUser(userAuth)
 
                 withContext(Main) {
+                    supportActionBar?.title = user.store
                     when (user.isAdmin){
                         false -> bottomNavigationBar.menu.removeItem(R.id.authorization)
                     }
