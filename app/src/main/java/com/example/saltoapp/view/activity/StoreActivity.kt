@@ -3,6 +3,8 @@ package com.example.saltoapp.view.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -12,6 +14,7 @@ import com.example.saltoapp.view.fragment.AuthFragment
 import com.example.saltoapp.view.fragment.DoorsFragment
 import com.example.saltoapp.view.fragment.EventListFragment
 import com.example.saltoapp.view.model.User
+import com.example.saltoapp.view.navigator.NavigatorImpl
 import com.example.saltoapp.view.recyclerView.UserListAdapter
 import com.example.saltoapp.view.viewmodel.FirebaseViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -31,8 +34,7 @@ class StoreActivity : AppCompatActivity() {
     private lateinit var userAuth: String
     private val currentUser = FirebaseAuth.getInstance().currentUser
     lateinit var user: User
-
-
+    val navigator = NavigatorImpl()
 
     private val mOnNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -121,5 +123,21 @@ class StoreActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.logout, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item!!.itemId) {
+            R.id.logout -> {
+                FirebaseAuth.getInstance().signOut()
+                navigator.newEvent(this, StartActivity())
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

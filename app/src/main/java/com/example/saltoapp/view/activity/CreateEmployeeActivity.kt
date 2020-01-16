@@ -4,23 +4,21 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.Switch
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
 import com.example.saltoapp.R
 import com.example.saltoapp.view.model.User
 import com.example.saltoapp.view.viewmodel.FirebaseViewModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_create_employee.*
-import kotlinx.android.synthetic.main.activity_create_store.*
 import kotlinx.android.synthetic.main.custom_toolbar.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class CreateEmployeeActivity : AppCompatActivity() {
 
@@ -48,7 +46,6 @@ class CreateEmployeeActivity : AppCompatActivity() {
 
         init()
 
-
         createEmployeeBtn.setOnClickListener {
             createEmployee(
                 User(
@@ -68,8 +65,6 @@ class CreateEmployeeActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 userAccess = viewModel.getUser(user)
-                Log.d(",,,", "USERACCESS: ${userAccess.name}")
-
             } catch (e: Error) {
                 Log.d(",,,", "Error: $e")
             }
@@ -80,7 +75,6 @@ class CreateEmployeeActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 viewModel.createUserAccount(user, userAccess.name, context)
-                Log.d(",,,", "Created new user!!!")
                 finish()
             } catch (e: Error) {
                 Log.d(",,,", "Error: $e")
@@ -88,5 +82,18 @@ class CreateEmployeeActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.close, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item!!.itemId) {
+            R.id.close -> {
+                finish()
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

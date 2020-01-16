@@ -43,7 +43,6 @@ class EventListFragment : Fragment() {
                 var user = viewModel.getUser(user)
                 var list = viewModel.getEventList(user.store)
 
-                Log.d(",,,", "LIST: $list")
                 withContext(Dispatchers.Main) {
                     event_list.apply {
                         layoutManager = LinearLayoutManager(context)

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Salto App</string>
+    <string name="salto_app">Salto App</string>
 
     <!--Button-->
     <string name="create_new_store">Create new store</string>
@@ -20,13 +21,6 @@
     <string name="lock_door">Lock Door</string>
     <string name="open_door">Open Door</string>
     <string name="access_denied">Access Denied</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="salto_app">Salto App</string>
-
-
-    <!--Switch-->
-
+    <string name="close">Close</string>
 
 </resources>

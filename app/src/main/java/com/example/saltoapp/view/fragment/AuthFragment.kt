@@ -63,7 +63,6 @@ class AuthFragment : Fragment(), UserListAdapter.OnItemClickListener {
                 user = viewModel.getUser(userAuth)
                 var list = viewModel.getAllStoreUsers(user.store)
 
-                Log.d(",,,", "LIST: $list")
                 withContext(Dispatchers.Main) {
                     employee_recyclerView.apply {
                         layoutManager = LinearLayoutManager(context)
