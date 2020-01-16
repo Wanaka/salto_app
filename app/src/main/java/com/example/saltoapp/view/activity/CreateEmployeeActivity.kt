@@ -24,9 +24,9 @@ class CreateEmployeeActivity : AppCompatActivity() {
 
     private lateinit var viewModel: FirebaseViewModel
     private val currentUser = FirebaseAuth.getInstance().currentUser
+    lateinit var context: Context
     private lateinit var user: String
     private lateinit var userAccess: User
-    lateinit var context: Context
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +66,7 @@ class CreateEmployeeActivity : AppCompatActivity() {
             try {
                 userAccess = viewModel.getUser(user)
             } catch (e: Error) {
-                Log.d(",,,", "Error: $e")
+                Log.d("TAG", "Error: $e")
             }
         }
     }
@@ -77,7 +77,7 @@ class CreateEmployeeActivity : AppCompatActivity() {
                 viewModel.createUserAccount(user, userAccess.name, context)
                 finish()
             } catch (e: Error) {
-                Log.d(",,,", "Error: $e")
+                Log.d("TAG", "Error: $e")
             }
         }
     }

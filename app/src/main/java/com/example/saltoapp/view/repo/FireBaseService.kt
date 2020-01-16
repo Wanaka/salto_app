@@ -2,18 +2,14 @@ package com.example.saltoapp.view.repo
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import com.example.saltoapp.view.activity.StoreActivity
 import com.example.saltoapp.view.model.DoorInteraction
 import com.example.saltoapp.view.model.Store
 import com.example.saltoapp.view.model.User
 import com.example.saltoapp.view.navigator.NavigatorImpl
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Tasks
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -22,18 +18,20 @@ import kotlin.collections.ArrayList
 
 class FireBaseService {
 
-
     private var auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
     private val navigator = NavigatorImpl()
 
+// Users
 
     suspend fun createAdminAccount(user: User, context: Context) {
         auth.createUserWithEmailAndPassword("${user.name}@mail.com", "123456")
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    addUserDB(user)
-                    createStore(user)
+                    CoroutineScope(IO).launch {
+                        addUserDB(user)
+                        createStore(user)
+                    }
                     navigator.newEvent(context, StoreActivity())
                 } else {
                     Log.w(",,,", "Error adding user")
@@ -45,8 +43,8 @@ class FireBaseService {
         auth.createUserWithEmailAndPassword("${user.name}@mail.com", "123456")
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    addUserDB(user)
-                    CoroutineScope(IO).launch{
+                    CoroutineScope(IO).launch {
+                        addUserDB(user)
                         loginAdmin(admin, context)
                     }
                 } else {
@@ -59,27 +57,27 @@ class FireBaseService {
         auth.signInWithEmailAndPassword("${name}@mail.com", "123456")
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Log.w(",,,", "Admin logged in: $name")
                 } else {
-                    // If sign in fails, display a message to the user.
+                    Log.w(",,,", "signInWithEmail:failure", task.exception)
+                }
+            }
+    }
+
+    suspend fun loginUser(name: String, context: Context) {
+        auth.signInWithEmailAndPassword("${name}@mail.com", "123456")
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    navigator.newEvent(context, StoreActivity())
+                } else {
                     Log.w(",,,", "signInWithEmail:failure", task.exception)
                 }
             }
     }
 
 
-    fun addUserDB(user: User) {
-        db.collection("users").document(user.name)
-            .set(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d(",,,", "DocumentSnapshot added with ID: ${documentReference}")
-            }
-            .addOnFailureListener { e ->
-                Log.w(",,,", "Error adding document", e)
-            }
-    }
+    // DB
 
-    private fun createStore(user: User) {
+    private suspend fun createStore(user: User) {
         val store = Store(user.store, frontDoor = false, storageRoom = false)
 
         db.collection("store").document(user.store)
@@ -92,16 +90,34 @@ class FireBaseService {
             }
     }
 
-    suspend fun loginUser(name: String, context: Context) {
-        auth.signInWithEmailAndPassword("${name}@mail.com", "123456")
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    navigator.newEvent(context, StoreActivity())
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(",,,", "signInWithEmail:failure", task.exception)
-                }
+    suspend fun addUserDB(user: User) {
+        db.collection("users").document(user.name)
+            .set(user)
+            .addOnSuccessListener { documentReference ->
+                Log.d(",,,", "DocumentSnapshot added with ID: ${documentReference}")
             }
+            .addOnFailureListener { e ->
+                Log.w(",,,", "Error adding document", e)
+            }
+    }
+
+    suspend fun setDoorStatus(store: Store) {
+        db.collection("store").document(store.store)
+            .set(store)
+            .addOnSuccessListener { documentReference ->
+                Log.d(",,,", "DocumentSnapshot added with ID: ")
+            }
+            .addOnFailureListener { e ->
+                Log.w(",,,", "Error adding document", e)
+            }
+    }
+
+    suspend fun sendToEventList(doorInteraction: DoorInteraction) {
+        db.collection("store").document(doorInteraction.store).collection("List")
+            .document(Date().time.toString())
+            .set(doorInteraction)
+            .addOnSuccessListener { Log.d(",,,", "DocumentSnapshot successfully written!") }
+            .addOnFailureListener { e -> Log.w(",,,", "Error writing document", e) }
     }
 
     suspend fun getUser(name: String): User {
@@ -122,6 +138,7 @@ class FireBaseService {
             } else {
                 Log.d(",,,", "No such document")
             }
+
             user
         } finally {
 
@@ -177,25 +194,6 @@ class FireBaseService {
         } finally {
 
         }
-    }
-
-    suspend fun setDoorStatus(store: Store) {
-        db.collection("store").document(store.store)
-            .set(store)
-            .addOnSuccessListener { documentReference ->
-                Log.d(",,,", "DocumentSnapshot added with ID: ")
-            }
-            .addOnFailureListener { e ->
-                Log.w(",,,", "Error adding document", e)
-            }
-    }
-
-    suspend fun sendToEventList(doorInteraction: DoorInteraction) {
-        db.collection("store").document(doorInteraction.store).collection("List")
-            .document(Date().time.toString())
-            .set(doorInteraction)
-            .addOnSuccessListener { Log.d(",,,", "DocumentSnapshot successfully written!") }
-            .addOnFailureListener { e -> Log.w(",,,", "Error writing document", e) }
     }
 
     suspend fun getEventList(store: String): ArrayList<DoorInteraction> {

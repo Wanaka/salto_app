@@ -19,12 +19,11 @@ import kotlinx.coroutines.Dispatchers.IO
 
 class CreateStoreActivity : AppCompatActivity() {
 
+    private lateinit var viewModel: FirebaseViewModel
+    lateinit var context: Context
     private var frontDoor: Boolean = false
     private var storageRoom: Boolean = false
 
-    lateinit var context: Context
-
-    private lateinit var viewModel: FirebaseViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,19 +34,19 @@ class CreateStoreActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(FirebaseViewModel::class.java)
 
-        val employee1: View = findViewById(R.id.employee1_auth)
-        val employee1_title = employee1.findViewById<TextView>(R.id.employee_title)
-        val employee1_input = employee1.findViewById<EditText>(R.id.employee_input)
-        val employee1_switch_front_door = employee1.findViewById<Switch>(R.id.employee_switch_front_door)
-        val employee1_switch_storage_room = employee1.findViewById<Switch>(R.id.employee_switch_storage_room)
+        val admin: View = findViewById(R.id.employee1_auth)
+        val adminTitle = admin.findViewById<TextView>(R.id.employee_title)
+        val adminInput = admin.findViewById<EditText>(R.id.employee_input)
+        val adminSwitchFrontDoor = admin.findViewById<Switch>(R.id.employee_switch_front_door)
+        val adminSwitchStorageRoom = admin.findViewById<Switch>(R.id.employee_switch_storage_room)
 
-        employee1_title.text = "You (Admin)"
+        adminTitle.text = getString(R.string.admin)
 
-        employee1_switch_front_door?.setOnCheckedChangeListener { _, isChecked -> frontDoor = isChecked }
-        employee1_switch_storage_room?.setOnCheckedChangeListener { _, isChecked -> storageRoom = isChecked }
+        adminSwitchFrontDoor?.setOnCheckedChangeListener { _, isChecked -> frontDoor = isChecked }
+        adminSwitchStorageRoom?.setOnCheckedChangeListener { _, isChecked -> storageRoom = isChecked }
 
         button_create.setOnClickListener {
-            createNewAccount(User(employee1_input.text.toString(), frontDoor, storageRoom, store_name.text.toString(), true))
+            createNewAccount(User(adminInput.text.toString(), frontDoor, storageRoom, store_name.text.toString(), true))
         }
 
     }

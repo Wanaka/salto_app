@@ -11,8 +11,8 @@ import kotlinx.android.synthetic.main.custom_toolbar.*
 
 class StartActivity : AppCompatActivity() {
 
-    val navigator = NavigatorImpl()
     val user = FirebaseAuth.getInstance().currentUser
+    private val navigator = NavigatorImpl()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +22,7 @@ class StartActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.salto_app)
 
         if(user != null){
-            navigator.newEvent(this, StoreActivity())
+            goTo(StoreActivity())
         }
 
         button_create.setOnClickListener {
@@ -37,5 +37,4 @@ class StartActivity : AppCompatActivity() {
     private fun goTo(activity: Activity){
         navigator.newEvent(this, activity)
     }
-
 }

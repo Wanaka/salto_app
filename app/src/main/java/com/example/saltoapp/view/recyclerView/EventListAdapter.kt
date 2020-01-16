@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.event_list_item.view.*
 class EventListAdapter(private val items: List<DoorInteraction>, private val context: Context) :
     RecyclerView.Adapter<EventListAdapter.EventListViewHolder>() {
 
-
     override fun getItemCount(): Int {
         return items.size
     }
@@ -30,7 +29,6 @@ class EventListAdapter(private val items: List<DoorInteraction>, private val con
         )
     }
 
-    // Binds each item in the ArrayList to a view
     override fun onBindViewHolder(holder: EventListViewHolder, position: Int) {
         holder.door.text = items[position].door
         holder.user.text = items[position].user
@@ -50,8 +48,8 @@ class EventListAdapter(private val items: List<DoorInteraction>, private val con
                 )
             )
         }
-
     }
+
 
     class EventListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val door: TextView = view.doorText
@@ -59,5 +57,4 @@ class EventListAdapter(private val items: List<DoorInteraction>, private val con
         val view: View = view.eventListView
         var access: Boolean = false
     }
-
 }

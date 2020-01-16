@@ -6,5 +6,4 @@ import android.content.Context
 interface Navigator {
     fun newEvent(context: Context, activity: Activity)
     fun accessDeniedToast(context: Context)
-
 }

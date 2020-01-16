@@ -6,6 +6,9 @@
     <string name="create_new_store">Create new store</string>
     <string name="create">Create</string>
     <string name="login">Login</string>
+    <string name="lock_door">Lock Door</string>
+    <string name="open_door">Open Door</string>
+
 
     <!--Text-->
     <string name="store_name">Store Name</string>
@@ -15,12 +18,9 @@
     <string name="storage_room">Storage Room</string>
     <string name="authorization">Authorization</string>
     <string name="add_new_employee">Add New Employee</string>
-    <string name="next">Next</string>
+    <string name="admin">You (Admin)</string>
     <string name="is_open">is open</string>
     <string name="is_locked">is locked</string>
-    <string name="lock_door">Lock Door</string>
-    <string name="open_door">Open Door</string>
     <string name="access_denied">Access Denied</string>
-    <string name="close">Close</string>
 
 </resources>

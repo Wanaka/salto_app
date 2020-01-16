@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.example.saltoapp.R
 import com.example.saltoapp.view.viewmodel.FirebaseViewModel
@@ -26,16 +25,14 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         setSupportActionBar(custom_toolbar)
         supportActionBar?.title = getString(R.string.login)
-        
         context = this
+
         auth = FirebaseAuth.getInstance()
+
         viewModel = ViewModelProviders.of(this).get(FirebaseViewModel::class.java)
 
-
-
         btn_login.setOnClickListener {
-
-            CoroutineScope(Dispatchers.IO).launch{
+            CoroutineScope(Dispatchers.IO).launch {
                 try {
                     viewModel.loginUser(login_text.text.toString(), context)
                 } catch (e: Error) {

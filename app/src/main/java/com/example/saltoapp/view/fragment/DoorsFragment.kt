@@ -1,6 +1,5 @@
 package com.example.saltoapp.view.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,7 +10,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
-
 import com.example.saltoapp.R
 import com.example.saltoapp.view.model.DoorInteraction
 import com.example.saltoapp.view.model.Store
@@ -28,21 +26,34 @@ import kotlinx.coroutines.withContext
 
 class DoorsFragment : Fragment() {
 
-    private val navigator = NavigatorImpl()
-    private val currentUser = FirebaseAuth.getInstance().currentUser
     private lateinit var viewModel: FirebaseViewModel
+    private val currentUser = FirebaseAuth.getInstance().currentUser
+    private val navigator = NavigatorImpl()
     lateinit var userAuth: User
     lateinit var doors: Store
     private lateinit var user: String
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewModel = ViewModelProviders.of(this).get(FirebaseViewModel::class.java)
-
         user = currentUser?.email.toString().substringBefore("@")
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init()
+        doorsButtonClick()
+    }
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_doors, container, false)
+    }
+
+    private fun init(){
         CoroutineScope(IO).launch {
             try {
                 var userAccess = viewModel.getUser(user)
@@ -58,18 +69,6 @@ class DoorsFragment : Fragment() {
                 Log.d(",,,", "Error: $e")
             }
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        doorsButtonClick()
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_doors, container, false)
     }
 
     private fun updateUI(store: Store) {
@@ -109,6 +108,7 @@ class DoorsFragment : Fragment() {
                                 btn_frontDoor
                             )
                         }
+
                         "Storage Room" -> {
                             viewModel.setDoorStatus(checkDoor(door))
                             updateEventList("Storage Room", true)
@@ -130,18 +130,17 @@ class DoorsFragment : Fragment() {
                     when (door) {
                         "Front Door" -> {
                             updateEventList("Front Door", false)
-//                        viewModel.sendToEventList(DoorInteraction(user, doors.store, false,"Front Door"))
                         }
+
                         "Storage Room" -> {
                             updateEventList("Storage Room", false)
-
-//                        viewModel.sendToEventList(DoorInteraction(user, doors.store, false, "Storage Room"))
                         }
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
+
             navigator.accessDeniedToast(context!!)
         }
     }
@@ -178,13 +177,5 @@ class DoorsFragment : Fragment() {
         view.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorRed))
         status.text = getText(R.string.is_locked)
         button.text = getText(R.string.open_door)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
-    override fun onDetach() {
-        super.onDetach()
     }
 }

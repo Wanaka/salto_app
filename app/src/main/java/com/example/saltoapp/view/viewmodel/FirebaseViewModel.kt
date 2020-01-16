@@ -1,7 +1,6 @@
 package com.example.saltoapp.view.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.saltoapp.view.model.DoorInteraction
 import com.example.saltoapp.view.model.Store
